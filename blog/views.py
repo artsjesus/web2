@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from blog.models import Blog
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
