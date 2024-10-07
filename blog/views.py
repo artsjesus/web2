@@ -5,6 +5,7 @@ from pytils.translit import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
+
 class BlogCreateView(CreateView):
     model = Blog
     fields = ("title", "text", "preview")
