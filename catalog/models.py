@@ -21,8 +21,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to="catalog/image", blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, verbose_name="Категория", blank=True, null=True)
     price = models.FloatField(verbose_name="Цена за покупку")
-    created_at = models.DateTimeField(verbose_name="Дата создания")
-    updated_at = models.DateTimeField(verbose_name="Дата последнего изменения")
+    created_at = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name="Дата последнего изменения", auto_now=True)
 
     class Meta:
         verbose_name = "Продукт"
@@ -31,3 +31,25 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Version(models.Model):
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="versions",
+        verbose_name="product",
+    )
+    version_number = models.CharField(max_length=50, verbose_name="Номер версии")
+    version_name = models.CharField(max_length=150, verbose_name="Название версии")
+    is_current = models.BooleanField(
+        default=False, verbose_name="Признак текущей версия"
+    )
+
+    class Meta:
+        verbose_name = "Версия"
+        verbose_name_plural = "Версии"
+        ordering = ["product", ]
+
+    def __str__(self):
+        return f"{self.product.name} - {self.version_name} ({self.version_number})"

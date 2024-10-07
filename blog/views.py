@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from blog.models import Blog
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
 # Create your views here.
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
 
 
 class BlogCreateView(CreateView):
