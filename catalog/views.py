@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from catalog.services import get_product_from_cache
 
 
 class ProductListView(ListView):
@@ -15,6 +16,9 @@ class ProductListView(ListView):
         for product in context["product_list"]:
             product.active_version = product.versions.filter(is_current=True).first()
         return context
+
+    def get_queryset(self):
+        return get_product_from_cache()
 
 
 class ProductDetailView(DetailView):
